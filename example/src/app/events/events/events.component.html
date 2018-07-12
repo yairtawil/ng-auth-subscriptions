@@ -1,0 +1,30 @@
+<div class="button-row">
+  <button mat-fab
+          matBadgeSize="large"
+          [matBadge]="counts.click"
+          [matBadgeHidden]="!counts.click">
+    Click
+  </button>
+
+  <button
+    mat-fab
+    matBadgeSize="large"
+    [matBadge]="counts.mousemove"
+    [matBadgeHidden]="!counts.mousemove"
+    color="primary">Mouse Move
+  </button>
+
+  <button
+    mat-fab
+    matBadgeSize="large"
+    [matBadge]="counts.mousewheel"
+    [matBadgeHidden]="!counts.mousewheel"
+    color="accent">Mouse Wheel</button>
+
+  <button mat-fab
+          matBadgeSize="large"
+          [matBadge]="counts.space"
+          [matBadgeHidden]="!counts.space"
+          color="warn">Space</button>
+
+</div>

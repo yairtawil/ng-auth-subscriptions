@@ -1,0 +1,17 @@
+div {
+  display: flex;
+  justify-content: center;
+  margin: 10vh 0;
+}
+div button {
+  margin: 0 10px;
+}
+:host .mat-fab {
+  width: 100px;
+  height: 100px;
+}
+:host /deep/ .mat-badge-large .mat-badge-content {
+  font-size: 11px;
+}
+
+

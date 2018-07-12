@@ -1,0 +1,36 @@
+<mat-toolbar color="primary">
+
+
+  <mat-toolbar-row>
+    <span>Auto subscriptions</span>
+    <span class="example-spacer"></span>
+
+    <a mat-button
+        aria-label="GitHub Repository"
+        [href]="LINK_TO_GITHUB">
+      <img alt="github" src="assets/github-circle-white-transparent.svg"/>
+    </a>
+
+  </mat-toolbar-row>
+
+</mat-toolbar>
+
+<nav mat-tab-nav-bar color="primary">
+  <a mat-tab-link
+     routerLink="/"
+     routerLinkActive
+     [routerLinkActiveOptions]="{ exact: true }"
+     #rla="routerLinkActive"
+     [active]="rla.isActive">
+    events
+  </a>
+
+  <a mat-tab-link
+     routerLink="timer"
+     routerLinkActive
+     #rlas="routerLinkActive"
+     [active]="rlas.isActive">
+    timer
+  </a>
+
+</nav>

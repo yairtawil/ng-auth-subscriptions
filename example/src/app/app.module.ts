@@ -1,19 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { MatBadgeModule, MatButtonModule, MatCardModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { AppRoutingModule } from './app-routing.module';
+import { EventsModule } from './events/events.module';
+import { TimerModule } from './timer/timer.module';
+import { NavbarModule } from './navbar/navbar.module';
+import { MatToolbarModule } from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    NavbarModule,
     MatToolbarModule,
-    MatButtonModule,
-    MatTableModule,
-    MatCardModule,
-    MatBadgeModule
+    EventsModule,
+    TimerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
