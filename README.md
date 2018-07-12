@@ -4,9 +4,7 @@
 
 # Auto Subscriptions
 
-Typescript library for automagically handling `subscribe()` / `unsubscribe()`
-
-of Observable properties of classes.
+Typescript library for automagically handling `subscribe()` / `unsubscribe()` of Observable properties of classes.
 
 ## Installation
 
@@ -16,7 +14,7 @@ npm install auto-subscriptions
 
 ## Usage
 
-Add `@AutoSubscriptions` to the class and `@AutoSubscription` to the class observable properties: 
+Add `@AutoSubscriptions` to the class and `@AutoSubscription` to the class observable properties, for which you want automatic subscription handling:
 
 ```typescript
 import { AutoSubscriptions } from 'auto-subscriptions';
@@ -46,7 +44,10 @@ For example:
 
 ```typescript
   const myClass = new MyClass();
-  myClass.init() /* "subscribe()" will is invoked for all `@AutoSubscription` observable properies, */
-  myClass.destroy() /* "unsubscribe()" will be invoked for all `@AutoSubscription` observable properies */
+  myClass.init() /* subscribe() is invoked for all @AutoSubscription observable properies, */
+  
+  // code ...
+  
+  myClass.destroy() /* unsubscribe() is invoked for all @AutoSubscription observable properies */
   
 ```
