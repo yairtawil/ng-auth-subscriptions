@@ -16,7 +16,7 @@ npm install auto-subscriptions
 
 ## Usage
 
-Add `@AutoSubscriptions` to your class:
+Add `@AutoSubscriptions` to your class and `@AutoSubscription` to your Observables: 
 
 ```typescript
 import { AutoSubscriptions } from 'auto-subscriptions';
@@ -26,6 +26,12 @@ import { AutoSubscriptions } from 'auto-subscriptions';
   destroy: 'destroy'
 })
 export class MyClass {
+ @AutoSubscription
+  myObs$ = of(true);
+
+  @AutoSubscription
+  myObsD$ = of(false);
+  
   init() {
   }
   destroy() {
@@ -44,31 +50,3 @@ For example:
   myClass.destroy() /* automatic `unsubsribe()` code will happen */
   
 ```
-After `myClass` is registed to automatic subsription mangement, 
-let's add new subscriptions by `AutoSubscription` property decorator:
-
-```typescript
-import { AutoSubscriptions, AutoSubscription } from 'auto-subscriptions';
-import { of } from 'rxjs';
-
-@AutoSubscriptions({
-  init: 'init',
-  destroy: 'destroy'
-})
-export class MyClass {
-
-  @AutoSubscription
-  myObs$ = of(true);
-
-  @AutoSubscription
-  myObsD$ = of(false);
-  
-  constructor() {
-  }
-  
-  someFunction() {
-  
-  }
-}
-```
-
