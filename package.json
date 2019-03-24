@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/jasmine": "^3.3.12",
     "gh-pages": "^2.0.1",
-    "jasmine-ts": "^0.3.0",
+    "jasmine-ts": "^0.2.1",
     "rimraf": "^2.6.3",
     "tslint": "^5.14.0",
     "typescript": "^3.3.3333"
