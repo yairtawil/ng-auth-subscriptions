@@ -23,9 +23,6 @@ cache:
   directories:
     - "./node_modules"
 
-before_deploy:
-  - "npm run build:prod"
-
 deploy:
   - provider: script
     script:
