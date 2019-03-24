@@ -1,4 +1,4 @@
-import { AutoSubscription, AutoSubscriptions, Errors } from './auto-subscriptions';
+import { AutoSubscription, AutoSubscriptions } from './auto-subscriptions';
 import * as autoSubscriptions from './auto-subscriptions';
 import createSpyObj = jasmine.createSpyObj;
 
@@ -18,42 +18,17 @@ describe('AutoSubscriptions', () => {
             it('should throw an error on invalid input type ', () => {
                 expect(() => AutoSubscriptions({
                     init: null,
-                    destroy: 'onDestroy'
-                })(Test)).toThrowError(Errors.invalidType.replace('{{key}}', 'init'));
-            });
-
-            it('should throw an error on invalid input function', () => {
-                const notPrototypeFunction = () => {
-
-                };
-                expect(() => AutoSubscriptions({
-                    init: 'onInit',
-                    destroy: notPrototypeFunction
-                })(Test)).toThrowError(Errors.invalidFunction.replace('{{key}}', 'destroy'));
+                    destroy: 'destroy'
+                })(Test)).toThrowError(`Can't find init function with: ${null}`);
             });
 
             describe('should success when inputs are valid', () => {
-                it('functions', () => {
-                    expect(() => AutoSubscriptions({
-                        init: Test.prototype.init,
-                        destroy: Test.prototype.destroy
-                    })(Test)).not.toThrowError();
-                });
-
                 it('strings', () => {
                     expect(() => AutoSubscriptions({
                         init: 'init',
                         destroy: 'destroy'
                     })(Test)).not.toThrowError();
                 });
-
-                it('string and function', () => {
-                    expect(() => AutoSubscriptions({
-                        init: Test.prototype.init,
-                        destroy: 'destroy'
-                    })(Test)).not.toThrowError();
-                });
-
             })
 
         });
@@ -70,8 +45,8 @@ describe('AutoSubscriptions', () => {
                 spyOn(autoSubscriptions, 'initSubscriptions');
 
                 AutoSubscriptions({
-                    init: Test.prototype.init,
-                    destroy: Test.prototype.destroy
+                    init: 'init',
+                    destroy: 'destroy'
                 })(Test);
 
                 expect(autoSubscriptions.initSubscriptions).not.toHaveBeenCalled();
@@ -81,8 +56,8 @@ describe('AutoSubscriptions', () => {
                 spyOn(autoSubscriptions, 'initSubscriptions');
 
                 @AutoSubscriptions({
-                    init: Test.prototype.init,
-                    destroy: Test.prototype.destroy
+                    init: 'init',
+                    destroy: 'destroy'
                 })
                 class Test {
                     @AutoSubscription
@@ -102,8 +77,8 @@ describe('AutoSubscriptions', () => {
 
             it('should call subscribe for each property', () => {
                 @AutoSubscriptions({
-                    init: Test.prototype.init,
-                    destroy: Test.prototype.destroy
+                    init: 'init',
+                    destroy: 'destroy'
                 })
                 class Test {
                     @AutoSubscription
@@ -129,6 +104,9 @@ describe('AutoSubscriptions', () => {
                     init() {
                         return 'value';
                     }
+                    destroy() {
+
+                    }
                 }
 
                 AutoSubscriptions({
@@ -145,19 +123,15 @@ describe('AutoSubscriptions', () => {
         });
 
         describe('AutoSubscriptions destroy', () => {
-            let Test = class Test {
-                init() {
-                }
-                destroy() {
-                }
-            };
-
             it('should call original "destroy"', () => {
                 @AutoSubscriptions({
                     init: 'init',
                     destroy: 'destroy'
                 })
                 class Test {
+                    init() {
+
+                    }
                     destroy(one, two, three) {
                         return `${one}/${two}/${three}`;
                     }
@@ -172,8 +146,8 @@ describe('AutoSubscriptions', () => {
                 spyOn(autoSubscriptions, 'removeSubscriptions');
 
                 @AutoSubscriptions({
-                    init: Test.prototype.init,
-                    destroy: Test.prototype.destroy
+                    init: 'init',
+                    destroy: 'destroy'
                 })
                 class Test {
                     @AutoSubscription
@@ -196,8 +170,8 @@ describe('AutoSubscriptions', () => {
                 const subscriptionsB = createSpyObj({ unsubscribe: () => {} });
 
                 @AutoSubscriptions({
-                    init: Test.prototype.init,
-                    destroy: Test.prototype.destroy
+                    init: 'init',
+                    destroy: 'destroy'
                 })
                 class Test {
                     @AutoSubscription
