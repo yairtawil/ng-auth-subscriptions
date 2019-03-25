@@ -1,37 +1,37 @@
 export type InputKeys = 'init' | 'destroy';
 
-interface Subscription {
+interface ISubscription {
   unsubscribe();
 }
 
-const isSubscription = (subscription: Subscription) => typeof subscription.unsubscribe === 'function';
+const isSubscription = (subscription: ISubscription) => typeof subscription.unsubscribe === 'function';
 
-interface Observable {
+interface IObservable {
   subscribe();
 }
 
-const isObservable = (observable: Observable) => typeof observable.subscribe === 'function';
+const isObservable = (observable: IObservable) => typeof observable.subscribe === 'function';
 
-export interface AutoSubscriptionProps {
+export interface IAutoSubscriptionProps {
   readonly AutoSubscriptionsPropertyKeys: string[];
-  AutoSubscriptionsList: Subscription[];
+  AutoSubscriptionsList: ISubscription[];
 }
 
-export const initSubscriptions = (instance: AutoSubscriptionProps): void => {
+export const initSubscriptions = (instance: IAutoSubscriptionProps): void => {
   instance.AutoSubscriptionsList =
     instance.AutoSubscriptionsPropertyKeys
       .map((key) => instance[key])
       .filter(Boolean)
       .map((value) => typeof value === 'function' ? value() : value)
       .filter(isObservable)
-      .map((observable: Observable) => observable.subscribe());
+      .map((observable: IObservable) => observable.subscribe());
 
 };
 
-export const removeSubscriptions = (instance: AutoSubscriptionProps): void => {
+export const removeSubscriptions = (instance: IAutoSubscriptionProps): void => {
   instance.AutoSubscriptionsList
     .filter(isSubscription)
-    .forEach((subscription: Subscription) => subscription.unsubscribe());
+    .forEach((subscription: ISubscription) => subscription.unsubscribe());
   instance.AutoSubscriptionsList = [];
 };
 
@@ -59,13 +59,15 @@ const AutoAutoSubscriptionsDestroy = (originalDestroy) => {
 
 export type AutoSubscriptionsMetadata<VALUE> = { [KEY in InputKeys]: VALUE };
 
-export interface IAutoSubscriptionsProto<VALUE extends string> {
-  new(...args): { [K in VALUE]: (...args) => any }
-}
+export type IAutoSubscriptionsProto<VALUE extends string> = new(...args) => { [K in VALUE]: (...args) => any };
 
-export function AutoSubscriptions<VALUE extends 'ngOnInit' | 'ngOnDestroy'>(): (constructor: IAutoSubscriptionsProto<VALUE>) => void | never;
+export function AutoSubscriptions<VALUE extends 'ngOnInit' | 'ngOnDestroy'>(): (
+  constructor: IAutoSubscriptionsProto<VALUE>
+) => void | never;
 
-export function AutoSubscriptions<VALUE extends string>(metadata: AutoSubscriptionsMetadata<VALUE>) : (constructor: IAutoSubscriptionsProto<VALUE>) => void | never;
+export function AutoSubscriptions<VALUE extends string>(metadata: AutoSubscriptionsMetadata<VALUE>): (
+  constructor: IAutoSubscriptionsProto<VALUE>
+) => void | never;
 
 export function AutoSubscriptions(metadata = { init: 'ngOnInit', destroy: 'ngOnDestroy' }) {
   return (constructor) => {
@@ -85,4 +87,3 @@ export function AutoSubscriptions(metadata = { init: 'ngOnInit', destroy: 'ngOnD
 export function AutoSubscription(target: any, propertyKey: string | symbol) {
   target.AutoSubscriptionsPropertyKeys = [...(target.AutoSubscriptionsPropertyKeys || []), propertyKey];
 }
-

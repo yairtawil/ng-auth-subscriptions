@@ -1,9 +1,17 @@
 {
-  "extends": ["tslint:recommended"],
+  "extends": [
+    "tslint:recommended"
+  ],
   "rules": {
     "ordered-imports": false,
-    "interface-name": [true, "never-prefix"],
-    "no-implicit-dependencies": [true, "dev"],
+    "interface-name": [
+      true,
+      "never-prefix"
+    ],
+    "no-implicit-dependencies": [
+      true,
+      "dev"
+    ],
     "quotemark": [
       false,
       "single"
@@ -11,6 +19,18 @@
     "member-access": false,
     "object-literal-sort-keys": false,
     "no-empty": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "interface-over-type-literal": true,
+    "interface-name": [
+      true,
+      "always-prefix"
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never"
+      }
+    ],
+    "indent": [true, "spaces", 2]
   }
 }
