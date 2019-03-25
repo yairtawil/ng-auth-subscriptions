@@ -46,7 +46,7 @@ const AutoAutoSubscriptionsInit = (originalInit) => {
   };
 };
 
-const AutoAutoSubscriptionsDestory = (originalDestroy) => {
+const AutoAutoSubscriptionsDestroy = (originalDestroy) => {
   return function(...args) {
     if (Array.isArray(this.AutoSubscriptionsList)) {
       removeSubscriptions(this);
@@ -57,9 +57,18 @@ const AutoAutoSubscriptionsDestory = (originalDestroy) => {
   };
 };
 
-export function AutoSubscriptions<VALUE extends string>(metadata: { [KEY in InputKeys]: VALUE }) {
-  return <PROTO extends new(...args) => { [K in VALUE]: (...args) => any }>
-  (constructor: PROTO): void | never  => {
+export type AutoSubscriptionsMetadata<VALUE> = { [KEY in InputKeys]: VALUE };
+
+export interface IAutoSubscriptionsProto<VALUE extends string> {
+  new(...args): { [K in VALUE]: (...args) => any }
+}
+
+export function AutoSubscriptions<VALUE extends 'ngOnInit' | 'ngOnDestroy'>(): (constructor: IAutoSubscriptionsProto<VALUE>) => void | never;
+
+export function AutoSubscriptions<VALUE extends string>(metadata: AutoSubscriptionsMetadata<VALUE>) : (constructor: IAutoSubscriptionsProto<VALUE>) => void | never;
+
+export function AutoSubscriptions(metadata = { init: 'ngOnInit', destroy: 'ngOnDestroy' }) {
+  return (constructor) => {
     const originalInit = constructor.prototype[metadata.init];
     const originalDestroy = constructor.prototype[metadata.destroy];
     if (!originalInit) {
@@ -69,10 +78,11 @@ export function AutoSubscriptions<VALUE extends string>(metadata: { [KEY in Inpu
       throw new Error(`Can't find destroy function with ${metadata.destroy}`);
     }
     constructor.prototype[metadata.init] = AutoAutoSubscriptionsInit(originalInit);
-    constructor.prototype[metadata.destroy] = AutoAutoSubscriptionsDestory(originalDestroy);
+    constructor.prototype[metadata.destroy] = AutoAutoSubscriptionsDestroy(originalDestroy);
   };
 }
 
 export function AutoSubscription(target: any, propertyKey: string | symbol) {
   target.AutoSubscriptionsPropertyKeys = [...(target.AutoSubscriptionsPropertyKeys || []), propertyKey];
 }
+

@@ -12,6 +12,42 @@ describe('AutoSubscriptions', () => {
       }
     }
 
+    it('should initial with default metadata', () => {
+      const subscriber$ = { unsubscribe: () => {}};
+      const observable$ = { subscribe: () => subscriber$ };
+
+      spyOn(observable$, 'subscribe').and.callThrough();
+      spyOn(subscriber$, 'unsubscribe');
+
+      @AutoSubscriptions()
+      class TestDefaultMeta {
+
+        @AutoSubscription
+        a$ = observable$;
+
+        @AutoSubscription
+        b$ = observable$;
+
+        @AutoSubscription
+        c$ = observable$;
+
+        ngOnInit() {
+
+        }
+
+        ngOnDestroy() {
+
+        }
+      }
+
+      const testDefaultMeta = new TestDefaultMeta();
+      testDefaultMeta.ngOnInit();
+      expect(observable$.subscribe).toHaveBeenCalledTimes(3);
+
+      testDefaultMeta.ngOnDestroy();
+      expect(subscriber$.unsubscribe).toHaveBeenCalledTimes(3);
+    });
+
     describe('AutoSubscriptions inputs', () => {
       it('should throw an error on invalid input type ', () => {
         expect(() => AutoSubscriptions({
