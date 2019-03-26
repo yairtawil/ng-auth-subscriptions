@@ -38,7 +38,7 @@ export class MyClass {
   @AutoSubscription
   numValue$: Observable<number> = of(100).pipe(
     tap((numValue: boolean) => this.numValue = numValue)
-  );;
+  );
   
   init() {
   }
