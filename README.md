@@ -16,19 +16,29 @@ npm install auto-subscriptions
 
 Add `@AutoSubscriptions` to the class and `@AutoSubscription` to the class observable properties, for which you want automatic subscription handling:
 
+#### Base class:
 ```typescript
 import { AutoSubscriptions } from 'auto-subscriptions';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @AutoSubscriptions({
   init: 'init',
   destroy: 'destroy'
 })
 export class MyClass {
+  boolValue: boolean;
+  numValue: number;
+  
   @AutoSubscription
-  myObs$: Observable<boolean> = of(true);
+  boolValue$: Observable<boolean> = of(true).pipe(
+    tap((boolValue: boolean) => this.boolValue = boolValue)
+  );
 
   @AutoSubscription
-  myObsD$: Observable<boolean> = of(false);
+  numValue$: Observable<number> = of(100).pipe(
+    tap((numValue: boolean) => this.numValue = numValue)
+  );;
   
   init() {
   }
@@ -52,11 +62,12 @@ For example:
   
 ```
 
-Angular components:
+#### Angular component (defaults are `ngOnInit` and `ngOnDestroy`):
 
 ```typescript
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AutoSubscriptions } from 'auto-subscriptions';
+import { HttpClient } from '@angular/common/http';
+import { AutoSubscriptions, AutoSubscription } from 'auto-subscriptions';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -65,16 +76,13 @@ import { tap } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-@AutoSubscriptions({
-  init: 'ngOnInit',
-  destroy: 'ngOnDestroy'
-})
+@AutoSubscriptions()
 export class AppComponent implements OnInit, OnDestroy {
-  result: Object;
+  httpResult: object;
   
   @AutoSubscription
-  httpOnInit$: Observable<Object> = this.http.get('HTTP_URL').pipe(
-    tap((result: Object) => this.result = result)
+  httpResult$: Observable<Object> = this.http.get('HTTP_URL').pipe(
+    tap((httpResult: object) => this.httpResult = httpResult)
   );
   
   constructor(protected http: HttpClient) {
