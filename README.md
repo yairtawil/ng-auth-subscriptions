@@ -1,22 +1,26 @@
+# Auto Subscriptions
+
 [![NPM](https://nodei.co/npm/auto-subscriptions.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/auto-subscriptions/)
 
 **[Demo](https://yairtawil.github.io/auto-subscriptions/)**
 
-# Auto Subscriptions
-
 Typescript library for automagically handling `subscribe()` / `unsubscribe()` of Observable properties of classes.
 
-## Installation
-
+### Installation
+##### Install with `npm`
 ```shell
 npm install auto-subscriptions
 ```
+##### Install with `yarn`
+```shell
+yarn add auto-subscriptions
+```
 
-## Usage
+### Usage
 
 Add `@AutoSubscriptions` to the class and `@AutoSubscription` to the class observable properties, for which you want automatic subscription handling:
 
-#### Base class:
+##### Base class:
 ```typescript
 import { AutoSubscriptions } from 'auto-subscriptions';
 import { Observable } from 'rxjs';
@@ -50,7 +54,7 @@ export class MyClass {
 
 when `destroy` is called `unsubscribe()` will be invoked for all `@AutoSubscription` observable properies,
 
-For example:
+##### For example:
 
 ```typescript
   const myClass = new MyClass();
@@ -62,7 +66,7 @@ For example:
   
 ```
 
-#### Angular component (defaults are `ngOnInit` and `ngOnDestroy`):
+##### Angular component (defaults are `ngOnInit` and `ngOnDestroy`):
 
 ```typescript
 import { Component, OnDestroy, OnInit } from '@angular/core';
