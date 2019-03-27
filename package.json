@@ -22,7 +22,8 @@
   "author": "Yair Tawil",
   "license": "MIT",
   "files": [
-    "dist/**/*"
+    "dist/**/*",
+    "README.md"
   ],
   "devDependencies": {
     "@types/jasmine": "^3.3.12",
