@@ -26,8 +26,7 @@
     "zone.js": "~0.8.26",
     "@angular/cdk": "^6.3.3",
     "@angular/http": "^6.0.3",
-    "@angular/material": "^6.3.3",
-    "auto-subscriptions": "file:.."
+    "@angular/material": "^6.3.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
