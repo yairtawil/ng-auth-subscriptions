@@ -15,28 +15,28 @@ export class EventsComponent implements OnInit, OnDestroy {
   @AutoSubscription
   onClick$ = fromEvent(window, 'click')
     .pipe(
-      tap(($event: MouseEvent) => this.counts.click = this.counts.click + 1)
+      tap(() => this.counts.click = this.counts.click + 1)
     );
 
   @AutoSubscription
   space$ = fromEvent(window, 'keypress')
     .pipe(
       filter(($event: KeyboardEvent) => $event.code === 'Space'),
-      tap(($event: MouseEvent) => this.counts.space = this.counts.space + 1)
+      tap(() => this.counts.space = this.counts.space + 1)
     );
 
 
   @AutoSubscription
   mousemove$ = fromEvent(window, 'mousemove')
     .pipe(
-      tap(($event: MouseEvent) => this.counts.mousemove = this.counts.mousemove + 1)
+      tap(() => this.counts.mousemove = this.counts.mousemove + 1)
     );
 
 
   @AutoSubscription
   mousewheel$ = fromEvent(window, 'mousewheel')
     .pipe(
-      tap(($event: MouseEvent) => this.counts.mousewheel = this.counts.mousewheel + 1)
+      tap(() => this.counts.mousewheel = this.counts.mousewheel + 1)
     );
 
   constructor() {

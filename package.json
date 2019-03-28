@@ -6,7 +6,7 @@
   "typings": "dist/public_api.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "predeploy": "npm run build && npm run build --prefix example -- --prod --base-href=https://yairtawil.github.io/auto-subscriptions/ --deploy-url=https://yairtawil.github.io/auto-subscriptions/",
+    "build:example": "npm run build && npm run build:gh-pages --prefix example",
     "deploy": "gh-pages -r https://$GITHUB_TOKEN@github.com/yairtawil/auto-subscriptions.git -d example/dist/example",
     "start:example": "npm run start --prefix example",
     "build:watch": "npm run build -- -w",

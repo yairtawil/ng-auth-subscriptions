@@ -6,6 +6,7 @@
     "postinstall": "npm link ../",
     "start": "ng serve",
     "build": "ng build",
+    "build:gh-pages": "ng build --prod --base-href=https://yairtawil.github.io/auto-subscriptions/ --deploy-url=https://yairtawil.github.io/auto-subscriptions/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
